@@ -123,14 +123,9 @@
       const header = document.getElementById('header');
       header.innerHTML = `<th>Place</th><th>Payout</th>`;
       
-      var test = ``;
-      test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
-      test += `<tr><td>${prize}</td><td>${roundOn}</td></tr>`;
-      output.innerHTML = test;
-
-      fetch('data.csv')
+      fetch('10.csv')
         .then(response => response.text())
-        .then(csvData => {
+        .then(csv10Data => {
           // Now, process the CSV data
           const rows = csvData.split("\n");
           rows.forEach(row => {
@@ -139,6 +134,16 @@
           });
         })
         .catch(error => console.error("Error loading CSV:", error));
+
+      var test = ``;
+      test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
+      test += `<tr><td>${prize}</td><td>${roundOn}</td></tr>`;
+      test += `<tr><td>${columns}</td><td>${percentagePaid}</td></tr>`;
+      output.innerHTML = test;
+
+      
+
+
 
       // payouts.forEach((amount, index) => {
       //   output.innerHTML += `<tr><td>${index + 1}</td><td>${amount}</td></tr>`;
