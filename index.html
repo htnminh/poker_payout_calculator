@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poker Payout Calculator</title>
+  <title>Poker Tournament Payout Calculator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -75,7 +75,7 @@
   </style>
 </head>
 <body>
-  <h1>Payout calculator</h1>
+  <h1>Poker Tournament Payout Calculator</h1>
 
   <!-- <label>Places paid</label>
   <input type="number" id="places" value="8" /> -->
@@ -128,10 +128,13 @@
         return;
       }
 
+      if (percentagePaid == 10) {
+        
+      }
+
       var test = ``;
       test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
       test += `<tr><td>${prize}</td><td>${roundOn}</td></tr>`;
-      
       output.innerHTML = test;
 
       
