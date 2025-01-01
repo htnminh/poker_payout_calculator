@@ -126,11 +126,15 @@
       fetch('10.csv')
         .then(response => response.text())
         .then(csv10Data => {
-          // Now, process the CSV data
           const rows = csvData.split("\n");
           rows.forEach(row => {
             const columns = row.split(",");
-            console.log(columns); // Process the row data
+            console.log(columns);
+
+            const csvContentDiv = document.createElement('div');
+            csvContentDiv.textContent = csvData; // Display the raw CSV data as text
+            document.body.appendChild(csvContentDiv); // Append it to the body
+
           });
         })
         .catch(error => console.error("Error loading CSV:", error));
@@ -138,7 +142,7 @@
       var test = ``;
       test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
       test += `<tr><td>${prize}</td><td>${roundOn}</td></tr>`;
-      test += `<tr><td>${columns}</td><td>${percentagePaid}</td></tr>`;
+      
       output.innerHTML = test;
 
       
