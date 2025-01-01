@@ -252,7 +252,8 @@
       const prize = parseFloat(document.getElementById('prize').value);
       const roundOn = parseFloat(document.getElementById('roundOn').value);
       
-      const roundOnDecimalPlaces = roundOn.toString().split('.')[1].length;
+      const roundOnDecimalPlaces = roundOn.toString().includes('.') ? 
+        roundOn.toString().split('.')[1].length : 0;
       
       // const payLabel = document.getElementById('pay-label');
       // payLabel.textContent = `${entries} entries | ${percentagePaid}% paid | $ ${prize} prize `;
