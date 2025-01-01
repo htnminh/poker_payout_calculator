@@ -123,21 +123,6 @@
       const header = document.getElementById('header');
       header.innerHTML = `<th>Place</th><th>Payout</th>`;
       
-      fetch('10.csv')
-        .then(response => response.text())
-        .then(csv10Data => {
-          const rows = csvData.split("\n");
-          rows.forEach(row => {
-            const columns = row.split(",");
-            console.log(columns);
-
-            const csvContentDiv = document.createElement('div');
-            csvContentDiv.textContent = csvData; // Display the raw CSV data as text
-            document.body.appendChild(csvContentDiv); // Append it to the body
-
-          });
-        })
-        .catch(error => console.error("Error loading CSV:", error));
 
       var test = ``;
       test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
