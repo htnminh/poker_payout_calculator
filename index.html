@@ -99,7 +99,7 @@
   <button id="calculate">Calculate</button>
   <br>
 
-  <label id="pay-label"></label>
+  <!-- <label id="pay-label"></label> -->
 
   <table>
     <thead>
@@ -123,6 +123,10 @@
       const header = document.getElementById('header');
       header.innerHTML = `<th>Place</th><th>Payout</th>`;
       
+      if (entries <= 1 || prize <= 0 || roundOn <= 0) {
+        alert('Please enter: Total entries > 1, Total prize money > 0, Round on > 0');
+        return;
+      }
 
       var test = ``;
       test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
