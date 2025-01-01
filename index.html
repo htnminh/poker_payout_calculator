@@ -14,34 +14,47 @@
 
     h1 {
       text-align: center;
-      color: #333;
+      font-size: 30px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 17px;
     }
 
     label {
       text-align: center;
       display: block;
       margin: 10px 0 5px;
+      font-size: 17px;
     }
 
     input {
       width: calc(100% - 50px);
+      max-width: 350px;
       padding: 10px;
-      margin: 10px auto;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
       display: block;
+      font-size: 17px;
     }
 
     button {
       display: block;
       /* max-width: 200px; */
-      margin: 10px auto;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 15px;
       padding: 10px;
       background-color: #007BFF;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 17px;
     }
 
     button:hover {
@@ -50,8 +63,12 @@
 
     table {
       width: 100%;
+      max-width: 380px;
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 5px;
+      margin-left: auto; 
+      margin-right: auto;
+      font-size: 17px;
     }
 
     th, td {
@@ -66,22 +83,28 @@
 
     select {
       width: calc(100% - 28px);
+      max-width: 372px;
       padding: 10px;
-      margin: 10px auto;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
       display: block;
+      font-size: 17px;
     }
   </style>
 </head>
 <body>
   <h1>Poker Tournament Payout Calculator</h1>
+  <p>... for various structures and number of players!</p>
+  <br>
 
   <!-- <label>Places paid</label>
   <input type="number" id="places" value="8" /> -->
 
   <label>Total entries</label>
-  <input type="number" id="entries" value="200" min="0"/>
+  <input type="number" id="entries" value="270" min="0"/>
 
   <label>Places paid</label>
   <select id="percentagePaid">
@@ -91,7 +114,7 @@
   </select>
 
   <label>Total prize money</label>
-  <input type="number" id="prize" value="10000" min="0"/>
+  <input type="number" id="prize" value="19005" min="0"/>
 
   <label>Round on</label>
   <input type="number" id="roundOn" value="0.1" min="0"/>
@@ -109,6 +132,10 @@
     </thead>
     <tbody id="output"></tbody>
   </table>
+
+  <footer style="text-align: center; margin-top: 20px;">
+    <p>♥️♠️ Created by <a href="https://github.com/htnminh/poker_payout_calculator" target="_blank">@htnminh</a> ♦️♣️</p>
+  </footer>
 
   <script>
     const csv10 = `Ranking/Entrants,5001+,4501-5000,4001-4500,3501-4000,3001-3500,2751-3000,2501-2750,2251-2500,2001-2250,1751-2000,1501-1750,1251-1500,1001-1250,801-1000,701-800,501-700,401-500,351-400,301-350,251-300,201-250,151-200,101-150,76-100,61-75,51-60,41-50,31-40,11-30,3-10,2
@@ -285,7 +312,7 @@
         const payout = row[columnIndex];
         if (payout) {
           calculatedPayout = Math.round(payout/100*prize / roundOn) * roundOn;
-          outputHtml += `<tr><td>${index + 1}</td><td>
+          outputHtml += `<tr><td>${dataRows[index][0]}</td><td>
             ${calculatedPayout.toFixed(roundOnDecimalPlaces)}</td></tr>`;
         }
       });
