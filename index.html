@@ -4,29 +4,107 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Poker Payout Calculator</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 2px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      text-align: center;
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input {
+      width: calc(100% - 50px);
+      padding: 10px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: block;
+    }
+
+    button {
+      display: block;
+      /* max-width: 200px; */
+      margin: 10px auto;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    select {
+      width: calc(100% - 28px);
+      padding: 10px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <h1>Payout Calculator</h1>
+  <h1>Payout calculator</h1>
+
+  <!-- <label>Places paid</label>
+  <input type="number" id="places" value="8" /> -->
+
+  <label>Total entries</label>
+  <input type="number" id="entries" value="200" min="0"/>
+
   <label>Places paid</label>
-  <input type="number" id="places" value="8" />
+  <select id="percentagePaid">
+    <option value="10">Top 10% paid</option>
+    <option value="15" selected>Top 15% paid</option>
+    <option value="20">Top 20% paid</option>
+  </select>
 
   <label>Total prize money</label>
-  <input type="number" id="prize" value="100" />
-
-  <label>Minimal payout</label>
-  <input type="number" id="minPayout" value="10" />
+  <input type="number" id="prize" value="10000" min="0"/>
 
   <label>Round on</label>
-  <input type="number" id="round" value="1" />
+  <input type="number" id="roundOn" value="0.1" min="0"/>
 
   <button id="calculate">Calculate</button>
+  <br>
+
+  <label id="pay-label"></label>
 
   <table>
     <thead>
-      <tr>
-        <th>#</th>
-        <th>Payout</th>
+      <tr id="header">
+        
       </tr>
     </thead>
     <tbody id="output"></tbody>
@@ -34,27 +112,37 @@
 
   <script>
     document.getElementById('calculate').addEventListener('click', function () {
-      const places = parseInt(document.getElementById('places').value);
+      const entries = parseInt(document.getElementById('entries').value);
+      const percentagePaid = parseInt(document.getElementById('percentagePaid').value);
       const prize = parseFloat(document.getElementById('prize').value);
-      const minPayout = parseFloat(document.getElementById('minPayout').value);
-      const roundOn = parseInt(document.getElementById('round').value);
+      const roundOn = parseFloat(document.getElementById('roundOn').value);
+      
+      // const payLabel = document.getElementById('pay-label');
+      // payLabel.textContent = `${entries} entries | ${percentagePaid}% paid | $ ${prize} prize `;
 
-      let payouts = Array(places).fill(minPayout);
-      let remainingPrize = prize - (minPayout * places);
+      const header = document.getElementById('header');
+      header.innerHTML = `<th>Place</th><th>Payout</th>`;
+      
+      var test = ``;
+      test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
+      test += `<tr><td>${prize}</td><td>${roundOn}</td></tr>`;
+      output.innerHTML = test;
 
-      for (let i = 0; i < places && remainingPrize > 0; i++) {
-        let share = Math.max(remainingPrize / (places - i), 0);
-        share = Math.round(share * 10 ** roundOn) / 10 ** roundOn;
-        payouts[i] += share;
-        remainingPrize -= share;
-      }
+      fetch('data.csv')
+        .then(response => response.text())
+        .then(csvData => {
+          // Now, process the CSV data
+          const rows = csvData.split("\n");
+          rows.forEach(row => {
+            const columns = row.split(",");
+            console.log(columns); // Process the row data
+          });
+        })
+        .catch(error => console.error("Error loading CSV:", error));
 
-      const output = document.getElementById('output');
-      output.innerHTML = '';
-
-      payouts.forEach((amount, index) => {
-        output.innerHTML += `<tr><td>${index + 1}</td><td>${amount}</td></tr>`;
-      });
+      // payouts.forEach((amount, index) => {
+      //   output.innerHTML += `<tr><td>${index + 1}</td><td>${amount}</td></tr>`;
+      // });
     });
   </script>
 </body>
