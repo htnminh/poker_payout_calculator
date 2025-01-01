@@ -300,38 +300,46 @@
             return entries >= min && entries <= max;
           }
           return entries === parseInt(range, 10);
-
-          // Handle normal range (e.g., "4501-5000")
-          
       }
 
       const columnIndex = findColumnIndex(entries);
       // console.log(columnIndex);
+      
+      // all of this are done to group the same payout percentage
+      let outputHtml = '';
+      let oldPayoutPercentage = dataRows[0][0];
+      let oldMin = 0;
+      let oldMax = 0;
+      dataRows.push(['-1', '-1']); // to make difference in last row
 
-      var outputHtml = '';
       dataRows.forEach((row, index) => {
-        const payout = row[columnIndex];
-        if (payout) {
-          calculatedPayout = Math.round(payout/100*prize / roundOn) * roundOn;
-          outputHtml += `<tr><td>${dataRows[index][0]}</td><td>
-            ${calculatedPayout.toFixed(roundOnDecimalPlaces)}</td></tr>`;
+        const group = dataRows[index][0];
+        const [min, max] =
+          group.includes('-') ? group.split('-').map(val => parseInt(val, 10)) 
+          : [parseInt(group, 10), parseInt(group, 10)];
+        const payoutPercentage = row[columnIndex];
+
+        if (oldPayoutPercentage && oldPayoutPercentage !== payoutPercentage) {
+          oldCalculatedPayout = Math.round(oldPayoutPercentage/100*prize / roundOn) * roundOn;
+          
+          if (oldMin != 0 && oldMax != 0)
+            if (oldMin != oldMax) 
+              outputHtml += `<tr><td>${oldMin}-${oldMax}</td><td>
+                ${oldCalculatedPayout.toFixed(roundOnDecimalPlaces)}</td></tr>`
+            else 
+              outputHtml += `<tr><td>${oldMin}</td><td>
+                ${oldCalculatedPayout.toFixed(roundOnDecimalPlaces)}</td></tr>`;
+          
+                oldPayoutPercentage = payoutPercentage;
+          oldMin = min;
+          oldMax = max;
+
+        } else {
+          oldMax = max;
         }
       });
       output.innerHTML = outputHtml;
       
-
-
-      // test
-
-
-      // var test = ``;
-      // test += `<tr><td>${entries}</td><td>${percentagePaid}</td></tr>`;
-      // test += `<tr><td>${prize}</td><td>${roundOn}</td></tr>`;
-      // output.innerHTML = test;
-
-      // payouts.forEach((amount, index) => {
-      //   output.innerHTML += `<tr><td>${index + 1}</td><td>${amount}</td></tr>`;
-      // });
     });
   </script>
 </body>
