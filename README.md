@@ -4,4 +4,4 @@
 
 > it's written in a day of finding no such tool on the internet
 
-![image](https://github.com/user-attachments/assets/45efa63a-b6ac-4f79-9cb9-863f94c7d04f)
+![image](https://github.com/user-attachments/assets/cd80d2eb-55cd-4ce9-94cc-18107a6bb0d4)
