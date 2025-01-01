@@ -276,7 +276,7 @@
       }
       const headers = rows[0].split(',');
       const dataRows = rows.slice(1).map(row => row.split(','));
-      console.log(dataRows);
+      // console.log(dataRows);
       
       function findColumnIndex(entries) {
         let columnIndex = -1;
@@ -306,7 +306,7 @@
       }
 
       const columnIndex = findColumnIndex(entries);
-      console.log(columnIndex);
+      // console.log(columnIndex);
 
       var outputHtml = '';
       dataRows.forEach((row, index) => {
